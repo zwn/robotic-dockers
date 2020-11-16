@@ -1,0 +1,16 @@
+#!/bin/sh
+
+set -u
+set -e
+
+mkdir src build devel logs
+
+catkin init
+catkin config --extend /opt/ros/melodic --merge-devel --cmake-args -DCMAKE_BUILD_TYPE=Release
+
+cd src
+git clone https://github.com/ethz-asl/voxblox.git
+wstool init . ./voxblox/voxblox_https.rosinstall
+wstool update
+
+catkin build

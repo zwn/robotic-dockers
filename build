@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -u
+set -e
+
+USER=$(docker info 2>&1 | grep -e '^ Username: ' | sed -e 's/ Username: \(.*\)/\1/')
+
+exec docker build --tag $USER/voxblox . $@
