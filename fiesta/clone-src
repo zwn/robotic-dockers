@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -u
+set -e
+
+mkdir src build devel logs
+
+catkin config --init --extend /opt/ros/melodic --merge-devel --cmake-args -DCMAKE_BUILD_TYPE=Release
+
+cd src
+git clone https://github.com/HKUST-Aerial-Robotics/FIESTA
+
+#wstool init . ./voxblox/voxblox_https.rosinstall
+#wstool update
+
+#catkin config --blacklist minkindr_python
+

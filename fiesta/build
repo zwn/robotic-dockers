@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -u
+set -e
+
+USER=$(docker info 2>&1 | grep -e '^ Username: ' | sed -e 's/ Username: \(.*\)/\1/')
+DIR=$(dirname $(readlink -f $0))
+IMAGE=$(basename $DIR)
+exec docker build --tag $USER/$IMAGE . $@
