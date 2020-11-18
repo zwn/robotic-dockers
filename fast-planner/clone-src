@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -u
+set -e
+
+mkdir src build devel logs
+
+#catkin config --init --extend /opt/ros/melodic --merge-devel --cmake-args -DCMAKE_BUILD_TYPE=Release
+
+cd src
+git clone https://github.com/HKUST-Aerial-Robotics/Fast-Planner
+cd Fast-Planner
+git apply ../../fp.patch

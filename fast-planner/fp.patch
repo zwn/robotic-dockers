@@ -1,0 +1,52 @@
+diff --git a/fast_planner/bspline_opt/CMakeLists.txt b/fast_planner/bspline_opt/CMakeLists.txt
+index 40cba27..c256c24 100755
+--- a/fast_planner/bspline_opt/CMakeLists.txt
++++ b/fast_planner/bspline_opt/CMakeLists.txt
+@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
+   visualization_msgs
+   plan_env
+   cv_bridge
++  nlopt
+ )
+ 
+ catkin_package(
+@@ -26,6 +27,7 @@ include_directories(
+     ${catkin_INCLUDE_DIRS}
+     ${Eigen3_INCLUDE_DIRS} 
+     ${PCL_INCLUDE_DIRS}
++    ${nlopt_INCLUDE_DIRS}
+ )
+ 
+ set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS} -O3 -Wall")
+@@ -35,5 +37,5 @@ add_library( bspline_opt
+     )
+ target_link_libraries( bspline_opt
+     ${catkin_LIBRARIES} 
+-    /usr/local/lib/libnlopt.so
++    ${nlopt_LIBRARIES}
+     )  
+diff --git a/fast_planner/bspline_opt/package.xml b/fast_planner/bspline_opt/package.xml
+index f0f2dc9..d2f9aef 100755
+--- a/fast_planner/bspline_opt/package.xml
++++ b/fast_planner/bspline_opt/package.xml
+@@ -53,6 +53,7 @@
+   <build_depend>rospy</build_depend>
+   <build_depend>std_msgs</build_depend>
+   <build_depend>plan_env</build_depend>
++  <build_depend>nlopt</build_depend>
+   <build_export_depend>roscpp</build_export_depend>
+   <build_export_depend>rospy</build_export_depend>
+   <build_export_depend>std_msgs</build_export_depend>
+diff --git a/uav_simulator/so3_control/src/so3_control_nodelet.cpp b/uav_simulator/so3_control/src/so3_control_nodelet.cpp
+index 10649b2..db9af58 100755
+--- a/uav_simulator/so3_control/src/so3_control_nodelet.cpp
++++ b/uav_simulator/so3_control/src/so3_control_nodelet.cpp
+@@ -214,5 +214,6 @@ SO3ControlNodelet::onInit(void)
+ }
+ 
+ #include <pluginlib/class_list_macros.h>
+-PLUGINLIB_DECLARE_CLASS(so3_control, SO3ControlNodelet, SO3ControlNodelet,
+-                        nodelet::Nodelet);
++//PLUGINLIB_DECLARE_CLASS(so3_control, SO3ControlNodelet, SO3ControlNodelet,
++//                        nodelet::Nodelet);
++PLUGINLIB_EXPORT_CLASS(SO3ControlNodelet, nodelet::Nodelet);
