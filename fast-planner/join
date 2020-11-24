@@ -1,0 +1,9 @@
+#!/bin/sh
+
+USER=$(docker info 2>&1 | grep -e '^ Username: ' | sed -e 's/ Username: \(.*\)/\1/')
+DIR=$(dirname $(readlink -f $0))
+IMAGE=${USER}/$(basename $DIR)-${ROS_DISTRO:-"melodic"}
+
+echo joining ${IMAGE}
+containerid=$(docker ps -aqf "ancestor=${IMAGE}")
+exec docker exec --privileged -e DISPLAY=${DISPLAY} -it ${containerid} bash

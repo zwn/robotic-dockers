@@ -2,6 +2,7 @@
 
 USER=$(docker info 2>&1 | grep -e '^ Username: ' | sed -e 's/ Username: \(.*\)/\1/')
 DIR=$(dirname $(readlink -f $0))
-IMAGE=$(basename $DIR)
+IMAGE=$(basename $DIR)-${ROS_DISTRO:-"melodic"}
 
+echo running ${IMAGE}
 exec docker run -e DISPLAY -e QT_X11_NO_MITSHM=1 -v "/tmp/.X11-unix:/tmp/.X11-unix" --gpus all --privileged --rm -it $USER/$IMAGE $@

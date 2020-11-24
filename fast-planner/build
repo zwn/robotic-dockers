@@ -3,8 +3,11 @@
 set -u
 set -e
 
+export ROS_DISTRO=${ROS_DISTRO:-"melodic"}
+
 USER=$(docker info 2>&1 | grep -e '^ Username: ' | sed -e 's/ Username: \(.*\)/\1/')
 DIR=$(dirname $(readlink -f $0))
-IMAGE=$(basename $DIR)
-export ROS_DISTRO=${ROS_DISTRO:-melodic}
-exec docker build --build-arg ROS_DISTRO --tag $USER/${IMAGE}-${ROS_DISTRO} . $@
+IMAGE=${USER}/$(basename $DIR)-${ROS_DISTRO}
+
+echo building ${IMAGE}
+exec docker build --build-arg ROS_DISTRO --tag ${IMAGE} . $@

@@ -16,3 +16,12 @@ COPY clone-src fp.patch ./
 RUN ./clone-src
 
 RUN source /opt/ros/${ROS_DISTRO}/setup.bash && catkin_make -DCMAKE_BUILD_TYPE=Release
+
+# support `docker exec -it <container> bash
+RUN echo "source /fast-planner-ws/devel/setup.sh" >> ~/.bashrc
+
+COPY entrypoint.sh ./
+
+ENTRYPOINT [ "/fast-planner-ws/entrypoint.sh" ]
+
+CMD [ "bash" ]
