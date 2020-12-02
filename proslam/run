@@ -1,0 +1,14 @@
+#!/bin/sh
+
+DIR=$(dirname $(readlink -f $0))
+. $DIR/../common.sh
+
+echo running ${IMAGE}
+
+if [ "$KITTY" != "" ];
+then
+	echo $KITTY:/kitty
+	OPTS="-v $KITTY:/kitty "
+fi
+
+exec docker run -e DISPLAY -e QT_X11_NO_MITSHM=1 $OPTS -v "/tmp/.X11-unix:/tmp/.X11-unix" --gpus all --privileged --rm -it --network host $IMAGE $@

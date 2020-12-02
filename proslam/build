@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -u # unset varibables == error
+set -e # exit immediately
+
+DIR=$(dirname $(readlink -f $0))
+
+. $DIR/../common.sh
+
+echo building ${IMAGE}
+exec docker build --tag ${IMAGE} .

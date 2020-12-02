@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -u
+set -e
+
+mkdir src build devel logs
+
+catkin config --init --extend /opt/ros/melodic --merge-devel --cmake-args -DCMAKE_BUILD_TYPE=Release
+
+git clone https://gitlab.com/srrg-software/srrg_proslam.git src/proslam
+
+cd src/proslam
+
+./pull_srrg_packages.bash

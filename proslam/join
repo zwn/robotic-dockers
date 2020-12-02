@@ -1,0 +1,8 @@
+#!/bin/sh
+
+DIR=$(dirname $(readlink -f $0))
+. $DIR/../common.sh
+
+echo joining ${IMAGE}
+containerid=$(docker ps -aqf "ancestor=${IMAGE}")
+exec docker exec --privileged -e DISPLAY=${DISPLAY} -it ${containerid} bash
